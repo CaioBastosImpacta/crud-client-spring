@@ -25,6 +25,11 @@ public class ClientService {
                 .orElseThrow(() -> new RuntimeException()));
     }
 
+    public Optional<ClientDomainResponse> getByNameClient(String name) {
+        return Optional.ofNullable(clientGateway.getByNameClient(name)
+                .orElseThrow(() -> new RuntimeException()));
+    }
+
     public ClientDomainResponse saveClient(ClientDomainRequest clientDomainRequest) {
         return clientGateway.saveClient(clientDomainRequest);
     }
@@ -38,5 +43,11 @@ public class ClientService {
         clientDomainResponse.setBirthDate(clientModelRequest.getBirthDate());
 
         return clientGateway.updateClient(clientDomainResponse);
+    }
+
+    public void deleteClient(Long idClient) {
+        getByIdClient(idClient);
+
+        clientGateway.deleteClient(idClient);
     }
 }

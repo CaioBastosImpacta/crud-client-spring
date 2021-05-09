@@ -4,6 +4,7 @@ import com.bastos.app.crudclient.commons.DataModelResponse;
 import com.bastos.app.crudclient.entrypoint.controller.constants.UrlConstants;
 import com.bastos.app.crudclient.entrypoint.mapper.ClientModelRequestMapper;
 import com.bastos.app.crudclient.entrypoint.mapper.ClientModelResponseMapper;
+import com.bastos.app.crudclient.entrypoint.model.request.ClientModelParamRequest;
 import com.bastos.app.crudclient.entrypoint.model.request.ClientModelRequest;
 import com.bastos.app.crudclient.entrypoint.model.response.ClientModelResponse;
 import com.bastos.app.crudclient.usecase.domain.request.ClientDomainRequest;
@@ -51,6 +52,20 @@ public class ClientController {
         return ResponseEntity.ok(dataModelResponse);
     }
 
+    @GetMapping("/name")
+    public ResponseEntity<DataModelResponse<ClientModelResponse>> getByName(ClientModelParamRequest clientModelParamRequest) {
+
+        Optional<ClientDomainResponse> clientDomainResponse = clientService.getByNameClient(clientModelParamRequest.getExpand());
+
+        ClientModelResponse clientModelResponse = ClientModelResponseMapper.convertDomainToModel(clientDomainResponse.get());
+
+        DataModelResponse dataModelResponse = DataModelResponse.builder()
+                .data(clientModelResponse)
+                .build();
+
+        return ResponseEntity.ok(dataModelResponse);
+    }
+
     @PostMapping
     public ResponseEntity<DataModelResponse<ClientModelResponse>> save(@RequestBody @Validated ClientModelRequest clientModelRequest) {
 
@@ -80,5 +95,11 @@ public class ClientController {
                 .build();
 
         return new ResponseEntity<>(dataModelResponse, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id_client}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable("id_client") Long idClient) {
+        clientService.deleteClient(idClient);
     }
 }

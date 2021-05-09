@@ -4,7 +4,6 @@ import com.bastos.app.crudclient.dataprovider.mapper.ClientDomainRequestMapper;
 import com.bastos.app.crudclient.dataprovider.mapper.ClientDomainResponseMapper;
 import com.bastos.app.crudclient.dataprovider.repository.ClientRepository;
 import com.bastos.app.crudclient.dataprovider.repository.entity.ClientEntity;
-import com.bastos.app.crudclient.entrypoint.model.request.ClientModelRequest;
 import com.bastos.app.crudclient.usecase.domain.request.ClientDomainRequest;
 import com.bastos.app.crudclient.usecase.domain.response.ClientDomainResponse;
 import com.bastos.app.crudclient.usecase.gateway.ClientGateway;
@@ -48,6 +47,20 @@ public class ClientImplementation implements ClientGateway {
     }
 
     @Override
+    public Optional<ClientDomainResponse> getByNameClient(String name) {
+
+        Optional<ClientEntity> clientEntity = clientRepository.findByNameIs(name);
+
+        if (clientEntity.isEmpty()) {
+            return Optional.empty();
+        }
+
+        ClientDomainResponse clientDomain = ClientDomainResponseMapper.convertEntityToDomain(clientEntity.get());
+
+        return Optional.of(clientDomain);
+    }
+
+    @Override
     public ClientDomainResponse saveClient(ClientDomainRequest clientDomainRequest) {
         ClientEntity clientEntity = ClientDomainRequestMapper.convertDomainToEntity(clientDomainRequest);
         ClientEntity clientEntityResponse = clientRepository.save(clientEntity);
@@ -73,5 +86,15 @@ public class ClientImplementation implements ClientGateway {
         ClientDomainResponse clientDomainResponse = ClientDomainResponseMapper.convertEntityToDomain(clientEntityResponse);
 
         return clientDomainResponse;
+    }
+
+    @Override
+    public void deleteClient(Long idClient) {
+        try {
+            clientRepository.deleteById(idClient);
+        } catch (Exception exception) {
+            throw new RuntimeException();
+        }
+
     }
 }
