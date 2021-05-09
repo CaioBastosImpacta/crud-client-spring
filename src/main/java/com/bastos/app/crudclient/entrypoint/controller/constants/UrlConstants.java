@@ -1,4 +1,4 @@
-package com.bastos.app.crudclient.entrypoint.controller;
+package com.bastos.app.crudclient.entrypoint.controller.constants;
 
 /**
  * Classe por conter as constantes de configuração

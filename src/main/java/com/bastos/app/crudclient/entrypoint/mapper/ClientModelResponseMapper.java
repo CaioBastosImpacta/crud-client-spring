@@ -6,7 +6,7 @@ import com.bastos.app.crudclient.usecase.domain.response.ClientDomainResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ClientModelMapper {
+public class ClientModelResponseMapper {
 
     public static List<ClientModelResponse> convertDomainToModel(List<ClientDomainResponse> allClientsDomain) {
         return allClientsDomain.stream()
@@ -15,5 +15,13 @@ public class ClientModelMapper {
                         .name(clientDomain.getName())
                         .birthDate(clientDomain.getBirthDate())
                         .build()).collect(Collectors.toList());
+    }
+
+    public static ClientModelResponse convertDomainToModel(ClientDomainResponse clientDomainResponse) {
+        return ClientModelResponse.builder()
+                .id(clientDomainResponse.getId())
+                .name(clientDomainResponse.getName())
+                .birthDate(clientDomainResponse.getBirthDate())
+                .build();
     }
 }
