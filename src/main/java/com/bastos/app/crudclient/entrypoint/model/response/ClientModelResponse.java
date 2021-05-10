@@ -7,6 +7,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * Classe responsável por conter os dados de modelo de saída da aplicação para a base de dados
+ * do cliente.
+ *
+ * @since 09/05/2021
+ */
 @Getter
 @Builder
 @AllArgsConstructor

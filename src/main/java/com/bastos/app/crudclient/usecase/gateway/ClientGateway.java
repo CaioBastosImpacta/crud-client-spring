@@ -6,6 +6,12 @@ import com.bastos.app.crudclient.usecase.domain.response.ClientDomainResponse;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Interface responsável por conter os contratos que o provider que irá comunicar com o mundo externo
+ * que ele deverá assinar para fazer as requisições.
+ *
+ * @since 09/05/2021
+ */
 public interface ClientGateway {
 
     List<ClientDomainResponse> getAllClients();

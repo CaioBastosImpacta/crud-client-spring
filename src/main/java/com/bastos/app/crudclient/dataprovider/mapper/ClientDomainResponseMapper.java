@@ -6,6 +6,12 @@ import com.bastos.app.crudclient.usecase.domain.response.ClientDomainResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Classe responsável por converter os dados de saída de entidade no qual o banco de dados devolve,
+ * para os dados de domínio da aplicação.
+ *
+ * @since 09/05/2021
+ */
 public class ClientDomainResponseMapper {
 
     public static List<ClientDomainResponse> convertEntityToDomain(List<ClientEntity> allClientsEntity) {

@@ -6,6 +6,12 @@ import com.bastos.app.crudclient.usecase.domain.response.ClientDomainResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Classe responsável por realizar as transformações de dados de domínio da aplicao para os dados
+ * modelo de resposta da aplicação.
+ *
+ * @since 09/05/2021
+ */
 public class ClientModelResponseMapper {
 
     public static List<ClientModelResponse> convertDomainToModel(List<ClientDomainResponse> allClientsDomain) {

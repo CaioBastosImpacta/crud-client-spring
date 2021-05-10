@@ -10,6 +10,12 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * Classe responsável por conter os dados de modelo de entrada da aplicação para a base de dados
+ * do cliente.
+ *
+ * @since 09/05/2021
+ */
 @Getter
 @Builder
 @AllArgsConstructor

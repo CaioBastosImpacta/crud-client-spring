@@ -1,14 +1,18 @@
 package com.bastos.app.crudclient.entrypoint.controller.constants;
 
 /**
- * Classe por conter as constantes de configuração
- * de header e URLs.
+ * Classe responsável por conter as constantes de ULR da aplicação.
  *
- * @author Caio Henrique Bastos
- * @since 08/05/2021
+ * @since 09/05/2021
  */
 public class UrlConstants {
 
-    public static final String URL_BASE = "/fit_app/v1/";
-    public static final String URL_CLIENT = URL_BASE + "clients";
+    public static final String URL_BASE = "/fit_app/v1";
+    public static final String URL_CLIENT = URL_BASE + "/clients";
+    public static final String URL_CLIENT_NAME = URL_CLIENT + "/name";
+
+    /**
+     * Construtor privado para evitar instanciação
+     */
+    private UrlConstants() {}
 }

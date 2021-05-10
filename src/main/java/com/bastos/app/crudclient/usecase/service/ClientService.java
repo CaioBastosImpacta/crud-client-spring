@@ -1,5 +1,7 @@
 package com.bastos.app.crudclient.usecase.service;
 
+import com.bastos.app.crudclient.entrypoint.controller.constants.CustomizedResponseExceptionConstants;
+import com.bastos.app.crudclient.entrypoint.controller.exception.ResourceNotFound;
 import com.bastos.app.crudclient.entrypoint.model.request.ClientModelRequest;
 import com.bastos.app.crudclient.usecase.domain.request.ClientDomainRequest;
 import com.bastos.app.crudclient.usecase.domain.response.ClientDomainResponse;
@@ -10,6 +12,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Classe responsável por conter as regras de negócio para as trasações de serviço
+ * do cliente e realizar os devidos tratamentos.
+ *
+ * @since 09/05/2021
+ */
 @Component
 public class ClientService {
 
@@ -22,12 +30,12 @@ public class ClientService {
 
     public Optional<ClientDomainResponse> getByIdClient(Long idClient) {
         return Optional.ofNullable(clientGateway.getByIdClient(idClient)
-                .orElseThrow(() -> new RuntimeException()));
+                .orElseThrow(() -> new ResourceNotFound(CustomizedResponseExceptionConstants.CLIENT_NOT_FOUND)));
     }
 
     public Optional<ClientDomainResponse> getByNameClient(String name) {
         return Optional.ofNullable(clientGateway.getByNameClient(name)
-                .orElseThrow(() -> new RuntimeException()));
+                .orElseThrow(() -> new ResourceNotFound(CustomizedResponseExceptionConstants.CLIENT_NOT_FOUND)));
     }
 
     public ClientDomainResponse saveClient(ClientDomainRequest clientDomainRequest) {

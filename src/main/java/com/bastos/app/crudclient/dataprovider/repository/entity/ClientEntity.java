@@ -4,6 +4,12 @@ import lombok.*;
 
 import javax.persistence.*;
 
+/**
+ * Classe responsável por converter por ser o modelo de entidade para os dados de cliente,
+ * no qual serão os dados de entrada e saída da entidade cliente
+ *
+ * @since 09/05/2021
+ */
 @Getter
 @Builder
 @AllArgsConstructor

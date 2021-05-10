@@ -1,5 +1,6 @@
 package com.bastos.app.crudclient.entrypoint.controller;
 
+import com.bastos.app.crudclient.commons.DataModelMapper;
 import com.bastos.app.crudclient.commons.DataModelResponse;
 import com.bastos.app.crudclient.entrypoint.controller.constants.UrlConstants;
 import com.bastos.app.crudclient.entrypoint.mapper.ClientModelRequestMapper;
@@ -19,6 +20,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Classe de controlle responsável por conter os endpoinst de client para realizar as requisições.
+ *
+ * @since 09/05/2021
+ */
 @RestController
 @RequestMapping(value = UrlConstants.URL_CLIENT)
 public class ClientController {
@@ -26,46 +32,57 @@ public class ClientController {
     @Autowired
     ClientService clientService;
 
+    @Autowired
+    DataModelMapper dataModelMapper;
+
+    /**
+     * Método responsável por relizar a busca de todos os clientes na base de dados.
+     *
+     * @return {@code ResponseEntity<DataModelResponse<Object>>} - Lista de entidade em um data de Clientes
+     */
     @GetMapping
     public ResponseEntity<DataModelResponse<Object>> getAll() {
         List<ClientDomainResponse> allClientsDomain = clientService.getAllClients();
 
         List<ClientModelResponse> clientModelResponses = ClientModelResponseMapper.convertDomainToModel(allClientsDomain);
 
-        var clienteDataModelResponse = DataModelResponse.builder()
-                .data(clientModelResponses)
-                .build();
-
-        return ResponseEntity.ok(clienteDataModelResponse);
+        return ResponseEntity.ok(dataModelMapper.setDataModel(clientModelResponses));
     }
 
+    /**
+     * Método responsável por relizar a busca de um cliente por ID
+     *
+     * @return {@code ResponseEntity<DataModelResponse<ClientModelResponse>>} - Entidade em um data de um cliente
+     */
     @GetMapping("/{id_client}")
     public ResponseEntity<DataModelResponse<ClientModelResponse>> getById(@PathVariable("id_client") Long idClient) {
         Optional<ClientDomainResponse> clientDomainResponse = clientService.getByIdClient(idClient);
 
         ClientModelResponse clientModelResponse = ClientModelResponseMapper.convertDomainToModel(clientDomainResponse.get());
 
-        DataModelResponse dataModelResponse = DataModelResponse.builder()
-                .data(clientModelResponse)
-                .build();
-
-        return ResponseEntity.ok(dataModelResponse);
+        return ResponseEntity.ok(dataModelMapper.setDataModel(clientModelResponse));
     }
 
-    @GetMapping("/name")
+    /**
+     * Método responsável por relizar a busca de um cliente por Nome. E tem que ser o mesmo nome que está na base de dados
+     *
+     * @return {@code ResponseEntity<DataModelResponse<ClientModelResponse>>} - Entidade em um data de um cliente
+     */
+    @GetMapping(UrlConstants.URL_CLIENT_NAME)
     public ResponseEntity<DataModelResponse<ClientModelResponse>> getByName(ClientModelParamRequest clientModelParamRequest) {
 
         Optional<ClientDomainResponse> clientDomainResponse = clientService.getByNameClient(clientModelParamRequest.getExpand());
 
         ClientModelResponse clientModelResponse = ClientModelResponseMapper.convertDomainToModel(clientDomainResponse.get());
 
-        DataModelResponse dataModelResponse = DataModelResponse.builder()
-                .data(clientModelResponse)
-                .build();
-
-        return ResponseEntity.ok(dataModelResponse);
+        return ResponseEntity.ok(dataModelMapper.setDataModel(clientModelResponse));
     }
 
+    /**
+     * Método responsável por relizar o cadastro (inclusao) de um cliente na base de dados.
+     *
+     * @return {@code ResponseEntity<DataModelResponse<ClientModelResponse>>} - O cadastro criado de uma entidade em data de um cliente
+     */
     @PostMapping
     public ResponseEntity<DataModelResponse<ClientModelResponse>> save(@RequestBody @Validated ClientModelRequest clientModelRequest) {
 
@@ -75,13 +92,14 @@ public class ClientController {
 
         ClientModelResponse clientModelResponse = ClientModelResponseMapper.convertDomainToModel(clientDomainResponse);
 
-        DataModelResponse dataModelResponse = DataModelResponse.builder()
-                .data(clientModelResponse)
-                .build();
-
-        return new ResponseEntity<>(dataModelResponse, HttpStatus.CREATED);
+        return new ResponseEntity<>(dataModelMapper.setDataModel(clientModelResponse), HttpStatus.CREATED);
     }
 
+    /**
+     * Método responsável por relizar a atualização por id de um cliente na base de dados.
+     *
+     * @return {@code ResponseEntity<DataModelResponse<ClientModelResponse>>} - A atualização de dados de uma entidade em data de um cliente
+     */
     @PutMapping("/{id_client}")
     public ResponseEntity<DataModelResponse<ClientModelResponse>> update (@PathVariable("id_client") Long idClient,
         @RequestBody @Validated ClientModelRequest clientModelRequest) {
@@ -90,13 +108,15 @@ public class ClientController {
 
         ClientModelResponse clientModelResponse = ClientModelResponseMapper.convertDomainToModel(clientDomainResponse);
 
-        DataModelResponse dataModelResponse = DataModelResponse.builder()
-                .data(clientModelResponse)
-                .build();
+        return new ResponseEntity<>(dataModelMapper.setDataModel(clientModelResponse), HttpStatus.CREATED);
 
-        return new ResponseEntity<>(dataModelResponse, HttpStatus.CREATED);
     }
 
+    /**
+     * Método responsável por relizar a deleção do cadastro por id de um cliente na base de dados.
+     * O método não retorna nada, apenas o HttpStatus 204
+     *
+     */
     @DeleteMapping("/{id_client}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id_client") Long idClient) {

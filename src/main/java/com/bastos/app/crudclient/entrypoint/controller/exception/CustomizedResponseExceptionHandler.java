@@ -6,19 +6,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+/**
+ * Classe responsável por conter as customizações de exceções que ocorre na aplicação.
+ * Os métodos capturam as exceções lançadas e realiza o devido tratamento.
+ *
+ * @since 09/05/2021
+ */
 @ControllerAdvice
-@RestController
 public class CustomizedResponseExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({HttpServerErrorException.class, Exception.class})
     public final ResponseEntity<Object> handleServerException(
-            HttpServerErrorException httpServerErrorException, WebRequest webRequest) {
+            Exception exception, WebRequest webRequest) {
 
         MensagemErrorModelResponse mensagemErrorModelResponse = MensagemErrorModelResponse.builder()
                 .codigo(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
@@ -28,15 +31,14 @@ public class CustomizedResponseExceptionHandler extends ResponseEntityExceptionH
         return new ResponseEntity<>(mensagemErrorModelResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler({HttpClientErrorException.class})
-    public final ResponseEntity<Object> handleClientException(
-            HttpServerErrorException httpServerErrorException, WebRequest webRequest) {
+    @ExceptionHandler(ResourceNotFound.class)
+    public final ResponseEntity<Object> handleResourceNotFoundException(Exception exception, WebRequest webRequest) {
 
         MensagemErrorModelResponse mensagemErrorModelResponse = MensagemErrorModelResponse.builder()
                 .codigo(String.valueOf(HttpStatus.NOT_FOUND.value()))
-                .mensagem(CustomizedResponseExceptionConstants.NOT_FOUND)
+                .mensagem(exception.getMessage())
                 .build();
 
-        return new ResponseEntity<>(mensagemErrorModelResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity(mensagemErrorModelResponse, HttpStatus.NOT_FOUND);
     }
 }
