@@ -68,7 +68,7 @@ public class ClientController {
      *
      * @return {@code ResponseEntity<DataModelResponse<ClientModelResponse>>} - Entidade em um data de um cliente
      */
-    @GetMapping(UrlConstants.URL_CLIENT_NAME)
+    @GetMapping("/name")
     public ResponseEntity<DataModelResponse<ClientModelResponse>> getByName(ClientModelParamRequest clientModelParamRequest) {
 
         Optional<ClientDomainResponse> clientDomainResponse = clientService.getByNameClient(clientModelParamRequest.getExpand());
