@@ -2,6 +2,7 @@ package com.bastos.app.crudclient.entrypoint.mapper;
 
 import com.bastos.app.crudclient.mock.UserModelRequestMock;
 import com.bastos.app.crudclient.usecase.domain.request.UserDomainRequest;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class UserModelRequestMapperTest {
 
+    @Test
     public void testConvertModelToDomainSucess() {
         UserDomainRequest userDomainRequest = UserModelRequestMapper.convertModelToDomain(UserModelRequestMock.getMockUserModelRequest());
         assertNotNull(userDomainRequest);
