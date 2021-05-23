@@ -5,4 +5,6 @@ import com.bastos.app.crudclient.usecase.domain.request.UserDomainRequest;
 public interface UserGateway {
 
     void saveClient(UserDomainRequest userDomainRequest);
+
+    UserDomainRequest findByEmail(String email);
 }
