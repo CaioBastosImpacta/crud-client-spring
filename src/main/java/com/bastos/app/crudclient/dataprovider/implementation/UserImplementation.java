@@ -1,7 +1,7 @@
 package com.bastos.app.crudclient.dataprovider.implementation;
 
 import com.bastos.app.crudclient.dataprovider.mapper.UserDomainRequestMapper;
-import com.bastos.app.crudclient.dataprovider.mapper.UserMapper;
+import com.bastos.app.crudclient.dataprovider.mapper.UserEntityRequestMapper;
 import com.bastos.app.crudclient.dataprovider.repository.UserRepository;
 import com.bastos.app.crudclient.dataprovider.repository.entity.UserEntity;
 import com.bastos.app.crudclient.usecase.domain.request.UserDomainRequest;
@@ -33,6 +33,6 @@ public class UserImplementation implements UserGateway {
         UserEntity userEntity = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario nao encontrado."));
 
-        return UserMapper.convertEntityToDomain(userEntity);
+        return UserEntityRequestMapper.convertEntityToDomain(userEntity);
     }
 }

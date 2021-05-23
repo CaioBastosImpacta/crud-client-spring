@@ -20,7 +20,8 @@ public class ClientDomainResponseMapper {
                         .id(clientEntity.getId())
                         .name(clientEntity.getName())
                         .birthDate(clientEntity.getBirth())
-                        .build()).collect(Collectors.toList());
+                        .build())
+                .collect(Collectors.toList());
     }
 
     public static ClientDomainResponse convertEntityToDomain(ClientEntity clientEntity) {
