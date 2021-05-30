@@ -127,3 +127,15 @@ AUTHORIZATION -> Inserir o token obtido no item 1.5
 ```bash
 CAMINHO -> 
 ```
+
+8 HealthCheck' verifica se a api está ok:
+```bash
+ROTA -> http://localhost:8080/fit_app/v1/healthCheck
+METODO -> GET
+```
+
+9 Swagger:
+```bash
+http://localhost:8080/swagger-ui.html#/
+```
+
