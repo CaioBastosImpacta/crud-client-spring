@@ -10,6 +10,7 @@ public class UrlConstants {
     public static final String URL_BASE = "/fit_app/v1";
     public static final String URL_CLIENT = URL_BASE + "/clients";
     public static final String URL_USER = URL_BASE + "/users";
+    public static final String URL_HEALTHCHECK = URL_BASE + "/healthCheck";
 
     /**
      * Construtor privado para evitar instanciação
