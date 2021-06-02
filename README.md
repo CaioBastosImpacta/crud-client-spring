@@ -47,7 +47,7 @@ docker container run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=[INSERIR A SENHA DO 
 ```
 2.4 Rodar uma imagem da aplicação na network criada anteriormente
 ```bash
-docker container run --rm -p 8080:8080 -e DB_HOST=crud-client-mysql --network crud-client-network crud-client:1.0.0
+docker container run --rm -p 8080:8080 -e DB_HOST=crud-client-mysql --network crud-client-network caiobastos12/crud-client:1.0.0
 ```
 2.5 Realizar o INSERT direto na base de dados, para gerar uma massa válida para obter o token.
 ```bash
